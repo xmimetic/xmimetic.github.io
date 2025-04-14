@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INDEX // Field Reports // PRIORITY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Core */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #FAFAFA; /* Off-white paper */
+            color: #212121; /* Dark Charcoal Text */
+            font-family: 'IBM Plex Mono', monospace; /* Monospace for index */
+            font-size: 14px; /* Smaller base for index */
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s; /* Add transition for smooth theme change */
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #100505; /* Dark background */
+            color: #e36b6b; /* Light red text */
+        }
+        body.dark-mode .report-header,
+        body.dark-mode .report-footer {
+            background-color: #1A1A1A; /* Darker header/footer */
+            border-color: #333;
+            color: #AAA;
+        }
+        body.dark-mode .classification { color: #FF6B6B; } /* Brighter red for classification */
+        body.dark-mode .back-link { color: #88AADD; } /* Lighter blue for links */
+        body.dark-mode .back-link:hover { color: #EFEFEF; }
+        body.dark-mode .index-title {
+            color: #FF6B6B; /* Match classification red */
+            border-bottom-color: #FF6B6B;
+        }
+        body.dark-mode .index-item {
+             border-bottom-color: #444; /* Darker dotted line */
+        }
+        body.dark-mode .item-title a {
+            color: #FF6B6B; /* Red like title */
+        }
+        body.dark-mode .item-title a:hover {
+            color: #88AADD; /* Lighter blue on hover */
+            text-decoration-color: #88AADD;
+        }
+        body.dark-mode .item-date {
+            color: #FF6B6B; /* Red like title */
+        }
+
+        /* Theme Toggle Button Style */
+        .theme-toggle-button {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            background: none;
+            border: 1px solid #888;
+            color: #555;
+            padding: 2px 6px;
+            margin-left: 10px; /* Space from previous element */
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .theme-toggle-button:hover {
+            background-color: #DDD;
+            color: #111;
+        }
+        body.dark-mode .theme-toggle-button {
+            border-color: #666;
+            color: #AAA;
+        }
+        body.dark-mode .theme-toggle-button:hover {
+            background-color: #444;
+            color: #FFF;
+        }
+
+        /* --- Document Structure --- */
+        .index-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem 4rem 2.5rem;
+        }
+
+        /* --- Header / Classification (Similar to post) --- */
+        .report-header, .report-footer {
+            font-size: 0.8rem;
+            color: #616161;
+            text-transform: uppercase;
+            padding: 0.5rem 2.5rem;
+            border-bottom: 1px solid #D5D5D5;
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .report-footer {
+            border-top: 1px solid #D5D5D5;
+            border-bottom: none;
+            margin-top: 4rem;
+            margin-bottom: 0;
+            padding-bottom: 0.5rem;
+        }
+        .classification { font-weight: 700; color: #A94442; /* Deep Red */ }
+        .report-ref { text-align: right; }
+        .back-link {
+            color: #336699;
+            text-decoration: none;
+            font-weight: 700;
+        }
+         .back-link:hover {
+             text-decoration: underline;
+         }
+
+        /* --- Index Title --- */
+        .index-title {
+            font-family: 'Source Serif Pro', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #212121;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-transform: uppercase;
+            border-bottom: 2px solid #212121;
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- Index List --- */
+        .index-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .index-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.6rem 0; /* Vertical spacing */
+            border-bottom: 1px dotted #BDBDBD; /* Dotted separator */
+        }
+        .index-item:last-child {
+             border-bottom: none;
+        }
+
+        .item-title a {
+            font-family: 'Source Serif Pro', serif; /* Serif for titles */
+            font-size: 1.1rem; /* Slightly larger */
+            color: #212121;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .item-title a:hover {
+            color: #4A6B82; /* Slate Blue on hover */
+            text-decoration: underline;
+        }
+
+        .item-ref, .item-date {
+            font-size: 0.9rem;
+            color: #616161;
+            white-space: nowrap; /* Prevent wrapping */
+        }
+        .item-ref::before {
+            content: '[REF: ';
+            opacity: 0.8;
+        }
+         .item-ref::after {
+            content: ']';
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header class="report-header">
+        <div>
+            <span class="classification"><a href="../index.html" class="back-link">« MAIN PAGE</a> :: START BLOG INDEX</span>
+            <button id="theme-toggle" class="theme-toggle-button">TOGGLE {DARK|LIGHT} THEME</button>
+        </div>
+        <div class="report-ref">::</div>
+    </header>
+
+    <div class="index-container">
+        <h1 class="index-title">BLOG POST INDEX</h1>
+
+        <ul class="index-list">
+            <li class="index-item">
+                <span class="item-title"><a href="de-extinction-science.html">De-Extinction Science and Dual-Use Implications</a></span>
+                <span class="item-date">2025-04-13</span>
+            </li>
+            <!-- Add more items here as new posts are created -->
+        </ul>
+    </div>
+
+    <footer class="report-footer">
+        <div>END INDEX</div>
+        <div>END INDEX</div>
+    </footer>
+
+    <script>
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+
+        // Function to set the theme
+        const setTheme = (theme) => {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        };
+
+        // Apply the saved theme on initial load
+        if (currentTheme) {
+            setTheme(currentTheme);
+        } else {
+            // Optional: Set a default theme if none is saved
+            // setTheme('light'); // Default is light
+        }
+
+        // Add event listener to the button
+        themeToggleButton.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                setTheme('light');
+            } else {
+                setTheme('dark');
+            }
+        });
+    </script>
+
+</body>
+</html> 
