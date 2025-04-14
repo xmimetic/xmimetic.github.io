@@ -25,6 +25,106 @@
             height: 100vh;
             overflow-x: hidden;
             overflow-y: auto;
+            transition: background-color 0.3s, color 0.3s; /* Add transition for smooth theme change */
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #100505; /* Dark background */
+            color: #e36b6b; /* Light red text */
+        }
+        body.dark-mode .report-header, 
+        body.dark-mode .report-footer {
+            background-color: #1A1A1A; /* Darker header/footer */
+            border-color: #333;
+            color: #AAA;
+        }
+        body.dark-mode .classification { color: #FF6B6B; } /* Brighter red for classification */
+        body.dark-mode .back-link { color: #88AADD; } /* Lighter blue for links */
+        body.dark-mode .back-link:hover { color: #EFEFEF; }
+        body.dark-mode .title-block { border-bottom-color: #FF6B6B; }
+        body.dark-mode .main-title { color: #FF6B6B; }
+        body.dark-mode .subtitle { color: #88AADD; }
+        body.dark-mode .summary-highlight {
+            background-color: #1F1F1F;
+            color: #D0D0D0;
+            border-color: #555;
+            border-left-color: #FF6B6B;
+        }
+        body.dark-mode .summary-highlight strong { color: #FFF; }
+        body.dark-mode .summary-highlight em { color: #FFC0CB; }
+        body.dark-mode .summary-image img { border-color: #555; }
+        body.dark-mode article h1, 
+        body.dark-mode article h2, 
+        body.dark-mode article h3 {
+            color: #88AADD;
+            border-bottom-color: #5C7A99; /* Darker blue line */
+        }
+        body.dark-mode article h1::before, 
+        body.dark-mode article h2::before, 
+        body.dark-mode article h3::before { color: #AAA; }
+        body.dark-mode article ul li::before { color: #88AADD; }
+        body.dark-mode article a { 
+            color: #88AADD; 
+            border-bottom-color: #5C7A99;
+        }
+        body.dark-mode article a:hover {
+            color: #EFEFEF;
+            border-bottom-color: #EFEFEF;
+        }
+        body.dark-mode article img { border-color: #555; }
+        body.dark-mode article figure { }
+        body.dark-mode article figcaption { 
+            color: #AAA; 
+            border-left-color: #555;
+        }
+        body.dark-mode article figcaption strong { color: #EFEFEF; }
+        body.dark-mode article strong { color: #FFFFFF; }
+        body.dark-mode article em { color: #FF6B6B; }
+        body.dark-mode article code { 
+            background-color: #2A2A2A; 
+            color: #D0D0D0; 
+            border-color: #444;
+        }
+        body.dark-mode article pre { 
+            background-color: #0A0A0A; 
+            color: #E0E0E0; 
+            border-color: #555; 
+            border-left-color: #88AADD;
+        }
+        body.dark-mode article table { border-color: #666; }
+        body.dark-mode article th, 
+        body.dark-mode article td { border-color: #444; }
+        body.dark-mode article th {
+            background-color: #3A3A3A;
+            color: #EFEFEF;
+            border-bottom-color: #666;
+        }
+
+        /* Theme Toggle Button Style */
+        .theme-toggle-button {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            background: none;
+            border: 1px solid #888;
+            color: #555;
+            padding: 2px 6px;
+            margin-left: 10px; /* Space from previous element */
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .theme-toggle-button:hover {
+            background-color: #DDD;
+            color: #111;
+        }
+        body.dark-mode .theme-toggle-button {
+            border-color: #666;
+            color: #AAA;
+        }
+        body.dark-mode .theme-toggle-button:hover {
+            background-color: #444;
+            color: #FFF;
         }
 
         /* --- Document Structure --- */
@@ -253,7 +353,10 @@
 <body>
 
     <header class="report-header">
-        <div><span class="classification"><a href="../index.html" class="back-link">« INDEX</a> :: START OF REPORT ::: DUAL-USE TECH</span></div>
+        <div>
+            <span class="classification"><a href="../index.html" class="back-link">« INDEX</a> :: START OF REPORT ::: DUAL-USE TECH</span>
+            <button id="theme-toggle" class="theme-toggle-button">TOGGLE {DARK|LIGHT}  THEME</button> 
+        </div>
         <div class="report-ref"></div> <!-- Example file ref -->
     </header>
 
@@ -284,7 +387,7 @@
 
             <p> Only if a cryopreserved ancient cell can be thawed, proven viable, and demonstrate replicative potential in vitro, can its intact nucleus then be extracted for cloning procedures, circumventing the complexities of sequencing fragmented ancient DNA. This is highly improbable.</p>
 
-            <p><em>This is the first domino to fall.</em></p>
+            <p><em> <b> This is the first domino to fall.</b></em></p>
 
             <p>Introducing ETTTHEREAL AI. This company promises to decipher the DNA of any custom-designed (macro)biological organism – including everyone's favorite extinct organisms: Dinosaurs.</p>
 
@@ -304,7 +407,7 @@
                 
                
 
-            <p><em>This is the second domino to fall.</em></p>
+            <p><em> <b>This is the second domino to fall.</b> </em></p>
 
             <p>This convergence brings us to a common place in the biosecurity field, looking at a classic dual use nature dilemma where on one hand the technology can be used to improve planetary health increasing species diversity and conservation efforts, while on the other engineering (macro)biological organisms designed for destruction and war.</p>
 
@@ -319,6 +422,40 @@
         <div><a href="../index.html" class="back-link">« INDEX</a> ::: END OF REPORT</div>
         <div>END OF REPORT :::</div>
     </footer>
+
+    <script>
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+
+        // Function to set the theme
+        const setTheme = (theme) => {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        };
+
+        // Apply the saved theme on initial load
+        if (currentTheme) {
+            setTheme(currentTheme);
+        } else {
+            // Optional: Set a default theme if none is saved
+            // setTheme('light'); // Default is light, so this line isn't strictly needed unless you want to explicitly set it
+        }
+
+        // Add event listener to the button
+        themeToggleButton.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                setTheme('light');
+            } else {
+                setTheme('dark');
+            }
+        });
+    </script>
 
 </body>
 </html>
